@@ -1,0 +1,333 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Internations API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/authenticate": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Authenticates a user",
+                "operationId": "d12bef059d2a0d97d223899f5af8352f",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "admin"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "admin_password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully authenticated user"
+                    },
+                    "401": {
+                        "description": "Invalid login details"
+                    },
+                    "403": {
+                        "description": "You are not authorized to access this resource"
+                    },
+                    "422": {
+                        "description": "Payload Validation error"
+                    }
+                }
+            }
+        },
+        "/api/groups": {
+            "get": {
+                "tags": [
+                    "GROUPS"
+                ],
+                "summary": "Gets all the groups",
+                "operationId": "f286cbf34dc4be32a94459a335658168",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/group": {
+            "post": {
+                "tags": [
+                    "GROUPS"
+                ],
+                "summary": "Creates a new group",
+                "operationId": "26e22b3903580f61f200d566a0b0f1cd",
+                "requestBody": {
+                    "description": "Pass group name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "Group 1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created group"
+                    },
+                    "422": {
+                        "description": "Payload Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/group/{group_id}/addUser/{user_id}": {
+            "post": {
+                "tags": [
+                    "GROUPS"
+                ],
+                "summary": "Adds user to a given group",
+                "operationId": "b51f1549629efd315e1954cf481e8427",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "Id of the group",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully added user to group!"
+                    },
+                    "404": {
+                        "description": "Group or user not found!"
+                    },
+                    "400": {
+                        "description": "User already in group!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/group/{group_id}/removeUser/{user_id}": {
+            "post": {
+                "tags": [
+                    "GROUPS"
+                ],
+                "summary": "Removes user to a given group",
+                "operationId": "8537aca67592f2f7bf1733fcb83912ed",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "Id of the group",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully removed user from group!"
+                    },
+                    "404": {
+                        "description": "Group or user not found!"
+                    },
+                    "400": {
+                        "description": "User not in group!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/group/{id}": {
+            "delete": {
+                "tags": [
+                    "GROUPS"
+                ],
+                "summary": "Deletes a given group",
+                "operationId": "1041c9c9fec71277c0027da0e6f79015",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the group",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted group!"
+                    },
+                    "400": {
+                        "description": "Group has users!"
+                    },
+                    "404": {
+                        "description": "Group not found!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Gets all the users",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "post": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Creates a new user",
+                "operationId": "089999749fbdec98922de2f74ba8d540",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "John Doe"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully created user"
+                    },
+                    "422": {
+                        "description": "Payload Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user/{id}": {
+            "delete": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Deletes a given user",
+                "operationId": "f8d7aea516ee464d0afee90f3a1a1722",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted user!"
+                    },
+                    "401": {
+                        "description": "You are not authorized to delete this user!"
+                    },
+                    "404": {
+                        "description": "User not found!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
